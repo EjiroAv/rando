@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/ic_splash">
+    android:background="@drawable/ic_custom_background">
 
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/rando"
+        app:srcCompat="@mipmap/ic_custom_splash_text"
         android:layout_centerInParent="true"/>
 </RelativeLayout>

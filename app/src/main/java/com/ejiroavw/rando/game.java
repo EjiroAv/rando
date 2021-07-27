@@ -19,6 +19,7 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ public class game extends AppCompatActivity {
     private Button submit;
     private TableLayout game_status;
     private com.daimajia.numberprogressbar.NumberProgressBar progressBar;
+    private RelativeLayout layout;
 
     public static int level = 1;
 
@@ -57,8 +59,8 @@ public class game extends AppCompatActivity {
         getSupportActionBar().hide();
         initview();
         setupUI(findViewById(R.id.layout));
-        main_text.setVisibility(View.INVISIBLE);
-        hint.setText("Generating Number ...");
+        setViewsInvisible();
+        layout.setVisibility(View.VISIBLE);
 
         handler = new Handler();{
             handler.postDelayed(new Runnable() {
@@ -71,14 +73,14 @@ public class game extends AppCompatActivity {
                             for (int i=0; i <100; i++){
                                 updateProgressBar();
                                 generatingNumberAnimation();
-                                SystemClock.sleep(100);
+                                SystemClock.sleep(20);
                             }
                             finishGeneratingNumberAnimation();
                         }
                     });
                     thread.start();
                 }
-            },3000);
+            },1000);
         }
 
 
@@ -176,6 +178,22 @@ public class game extends AppCompatActivity {
         return difficulty;
     }
 
+    private void setViewsInvisible(){
+        main_text.setVisibility(View.INVISIBLE);
+        player_input.setVisibility(View.INVISIBLE);
+        submit.setVisibility(View.INVISIBLE);
+        game_status.setVisibility(View.INVISIBLE);
+        hint.setVisibility(View.INVISIBLE);
+    }
+
+    private void setViewsVisible(){
+        main_text.setVisibility(View.VISIBLE);
+        player_input.setVisibility(View.VISIBLE);
+        submit.setVisibility(View.VISIBLE);
+        game_status.setVisibility(View.VISIBLE);
+        hint.setVisibility(View.VISIBLE);
+    }
+
     private void updateProgressBar(){
         game.this.runOnUiThread(new Runnable() {
             @Override
@@ -211,8 +229,9 @@ public class game extends AppCompatActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            generating_number_animation_view.setVisibility(View.INVISIBLE);
-                            progressBar.setVisibility(View.INVISIBLE);
+//                            generating_number_animation_view.setVisibility(View.INVISIBLE);
+//                            progressBar.setVisibility(View.INVISIBLE);
+                            layout.setVisibility(View.INVISIBLE);
                         }
                     },2000);
                 }
@@ -221,7 +240,7 @@ public class game extends AppCompatActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            main_text.setVisibility(View.VISIBLE);
+                            setViewsVisible();
                             hint.setText("Number is Between 0 and "+setDifficulty(level));
                         }
                     },2000);
@@ -270,6 +289,7 @@ public class game extends AppCompatActivity {
         main_text = findViewById(R.id.game_mainText_view);
         generating_number_animation_view = findViewById(R.id.game_generating_number_animation_view);
         progressBar = findViewById(R.id.number_progress_bar);
+        layout = findViewById(R.id.generating_number_animation_layout);
     }
 
     // Create Dialog for Different Case Scenarios

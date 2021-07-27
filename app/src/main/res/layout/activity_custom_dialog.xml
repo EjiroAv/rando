@@ -6,7 +6,7 @@
     android:paddingVertical="15dp"
     android:paddingStart="20dp"
     android:paddingEnd="20dp"
-    android:background="@color/white">
+    android:background="@color/background_color">
 
     <TextView
         android:id="@+id/custom_dialog_loss_title"
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/consola"
-        android:textColor="@color/black"
+        android:textColor="@color/text_color"
         android:textSize="18dp"
         android:text="Exceeded Number Of Tries!"/>
 
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/custom_dialog_loss_title"
         android:fontFamily="@font/consola"
-        android:textColor="@color/black"
+        android:textColor="@color/text_color"
         android:layout_marginTop="15dp"
         android:text="Game Over! Correct Number was 12"/>
     <LinearLayout
@@ -54,6 +54,7 @@
             android:layout_toRightOf="@id/custom_dialog_loss_button_exit"
             android:fontFamily="@font/consola"
             android:layout_marginTop="15dp"
+            android:textColor="@color/text_color"
             android:background="@drawable/ic_custom_button_background"
             android:layout_below="@id/custom_dialog_loss_message"
             android:text="Try Again" />

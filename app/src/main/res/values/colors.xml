@@ -11,4 +11,9 @@
     <color name="hint_blue">#082FA4</color>
     <color name="green">#008000</color>
     <color name="red">#ff0000</color>
+
+<!--    For Normal/Light Mode-->
+    <color name="background_color">#FFFFFFFF</color>
+    <color name="text_color">#FF000000</color>
+    <color name="border_line">#FF000000</color>
 </resources>
