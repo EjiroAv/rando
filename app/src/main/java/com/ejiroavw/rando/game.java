@@ -4,23 +4,21 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -86,7 +84,7 @@ public class game extends AppCompatActivity {
 
 
 
-        //To Increase Difficulty with Level
+
 
 
 
@@ -116,7 +114,7 @@ public class game extends AppCompatActivity {
                     mainAlgorithm();
                 } else {
                     tries.setVisibility(View.INVISIBLE);
-                    createDialog("loss");
+                    createCustomDialog("loss");
                 }
 
             }
@@ -129,6 +127,7 @@ public class game extends AppCompatActivity {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_ENTER:
                             hideSoftKeyboard(game.this);
+
                         default:
                             break;
                     }
@@ -186,7 +185,10 @@ public class game extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        createCustomDialog("exit");
+    }
 
     private void generatingNumberAnimation() {
         game.this.runOnUiThread(new Runnable() {
@@ -271,65 +273,138 @@ public class game extends AppCompatActivity {
     }
 
     // Create Dialog for Different Case Scenarios
-    public void createDialog(String type) {
-        if (type == "loss") {
-            AlertDialog.Builder alertDialogTest = new AlertDialog.Builder(game.this);
-            alertDialogTest.setCancelable(false);
-            alertDialogTest.setTitle("Exceeded Number Of Tries!");
-            alertDialogTest.setMessage("Game Over! Correct Number was " + randomNumberGenerated);
-            alertDialogTest.setPositiveButton("Try Again!", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    //Reset number of Tries and Previous Player Input
-                    numberOfTries = 0;
-                    previousPlayerInput = null;
-                    Intent reloadPage = new Intent(game.this, game.class);
-                    finish();
-                    startActivity(reloadPage);
-                    overridePendingTransition(0, 0);
-                }
-            })
-                    .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            numberOfTries = 0;
-                            previousPlayerInput = null;
-                            Intent endGame = new Intent(game.this, main_menu.class);
-                            startActivity(endGame);
-                        }
-                    });
-            AlertDialog alertDialogTest_onCreate = alertDialogTest.create();
-            alertDialogTest_onCreate.show();
-        } else if (type == "win") {
-            AlertDialog.Builder alertDialogTest = new AlertDialog.Builder(game.this);
-            alertDialogTest.setCancelable(false);
-            alertDialogTest.setTitle("Level Cleared!");
-            alertDialogTest.setMessage("Congratulations! You Guess the Correct Answer \n" +
-                    "Total Point is : " + totalPoints_accumulated);
-            alertDialogTest.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    numberOfTries = 0;
-                    previousPlayerInput = null;
-                    Intent reloadPage = new Intent(game.this, game.class);
-                    finish();
-                    startActivity(reloadPage);
-                    overridePendingTransition(0, 0);
-                }
-            })
-                    .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            numberOfTries = 0;
-                            previousPlayerInput = null;
-                            Intent endGame = new Intent(game.this, main_menu.class);
-                            startActivity(endGame);
-                        }
-                    });
-            AlertDialog alertDialogTest_onCreate = alertDialogTest.create();
-            alertDialogTest_onCreate.show();
-        }
 
+    public void createCustomDialog(String type){
+        if (type == "loss"){
+            final Dialog dialog = new Dialog(game.this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.activity_custom_dialog);
+
+            TextView titleTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_title);
+            TextView messageTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_message);
+            Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
+            Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
+
+            titleTextView.setText("Exceeded Number Of Tries!");
+            messageTextView.setText("Game Over! Correct Number was " + randomNumberGenerated);
+            positiveButton.setText("Try Again");
+            negativeButton.setText("End Game");
+
+            positiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    numberOfTries = 0;
+                    previousPlayerInput = null;
+                    Intent reloadPage = new Intent(game.this, game.class);
+                    finish();
+                    startActivity(reloadPage);
+                    overridePendingTransition(0, 0);
+                    dialog.dismiss();
+                }
+            });
+            negativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    numberOfTries = 0;
+                    previousPlayerInput = null;
+                    Intent endGame = new Intent(game.this, main_menu.class);
+                    startActivity(endGame);
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+
+        }else if (type == "win"){
+            final Dialog dialog = new Dialog(game.this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.activity_custom_dialog);
+
+            TextView titleTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_title);
+            TextView messageTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_message);
+            Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
+            Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
+
+            titleTextView.setText("Level Cleared!");
+            messageTextView.setText("Congratulations! You Guess the Correct Answer \n" +
+                    "Total Point is : " + totalPoints_accumulated);
+            positiveButton.setText("Continue");
+            negativeButton.setText("End Game");
+
+            positiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    numberOfTries = 0;
+                    previousPlayerInput = null;
+                    Intent reloadPage = new Intent(game.this, game.class);
+                    finish();
+                    startActivity(reloadPage);
+                    overridePendingTransition(0, 0);
+                    dialog.dismiss();
+                }
+            });
+            negativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    numberOfTries = 0;
+                    previousPlayerInput = null;
+                    Intent endGame = new Intent(game.this, main_menu.class);
+                    startActivity(endGame);
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+
+        }else if (type == "exit"){
+            final Dialog dialog = new Dialog(game.this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.activity_custom_dialog);
+
+            TextView titleTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_title);
+            TextView messageTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_message);
+            Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
+            Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
+
+            titleTextView.setText("Exit Game");
+            messageTextView.setText("Are you sure You want to Exit Game");
+            positiveButton.setText("No");
+            negativeButton.setText("Yes");
+
+            positiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    numberOfTries = 0;
+                    previousPlayerInput = null;
+                    Intent reloadPage = new Intent(game.this, game.class);
+                    finish();
+                    startActivity(reloadPage);
+                    overridePendingTransition(0, 0);
+                    dialog.dismiss();
+                }
+            });
+            negativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences preference  = getSharedPreferences("PREF",0);
+                    SharedPreferences.Editor editor = preference.edit();
+                    editor.putInt("total_points",totalPoints_accumulated);
+                    editor.apply();
+
+                    Intent gotoScoresPage = new Intent(game.this, scores.class);
+                    finish();
+                    startActivity(gotoScoresPage);
+                    overridePendingTransition(0, 0);
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+
+        }
     }
 
 
@@ -353,7 +428,7 @@ public class game extends AppCompatActivity {
                     totalPoints_accumulated = totalPoints_accumulated + 20;  //calculate Total Points
                     level = level + 1;
                     System.out.println("Total Points : " + totalPoints_accumulated);
-                    createDialog("win"); //Create a Dialog for Winning Game
+                    createCustomDialog("win"); //Create a Dialog for Winning Game
                 } else {
                     if (playerInput < randomNumberGenerated) {
                         hint.setText("Try a Number Higher than " + playerInput_string);
@@ -385,7 +460,7 @@ public class game extends AppCompatActivity {
 
         if (numberOfTries == 5) {
             System.out.println("GAME OVER!, Correct Number was " + randomNumberGenerated);
-            createDialog("loss"); //Create a Dialog for loosing Game
+            createCustomDialog("custom_loss"); //Create a Dialog for loosing Game
         }
 
     }

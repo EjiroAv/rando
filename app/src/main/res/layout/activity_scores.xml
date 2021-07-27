@@ -7,15 +7,86 @@
     tools:context=".scores">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/high_score_header_view"
         android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
         android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:textSize="32dp"
+        android:fontFamily="@font/consola"
         android:textColor="@color/black"
-        android:layout_centerInParent="true"
-        android:text="Coming soon ..."
-        tools:layout_editor_absoluteX="192dp"
-        tools:layout_editor_absoluteY="352dp" />
+        android:textSize="32sp"
+        android:text="SCORES" />
 
+    <TextView
+        android:id="@+id/current_total_points_view"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/high_score_header_view"
+        android:layout_marginTop="25dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/consola"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:text="Total Score: 1000" />
+
+
+    <TextView
+        android:id="@+id/scores_rank_1_view"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/current_total_points_view"
+        android:layout_marginTop="25dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/consola"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:text="|1|   1000|" />
+
+    <TextView
+        android:id="@+id/scores_rank_2_view"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/scores_rank_1_view"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/consola"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:text="|2|   1000|" />
+
+    <TextView
+        android:id="@+id/scores_rank_3_view"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/scores_rank_2_view"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/consola"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:text="|3|   1000|" />
+
+    <TextView
+        android:id="@+id/scores_rank_4_view"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/scores_rank_3_view"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/consola"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:text="|4|   1000|" />
+
+    <TextView
+        android:id="@+id/scores_rank_5_view"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/scores_rank_4_view"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/consola"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:text="|5|   1000|" />
 </RelativeLayout>
