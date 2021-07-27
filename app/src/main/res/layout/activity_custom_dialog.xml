@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="15dp"
+    android:paddingVertical="15dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/custom_dialog_loss_title"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/consola"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:text="Exceeded Number Of Tries!"/>
+
+    <TextView
+        android:id="@+id/custom_dialog_loss_message"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/custom_dialog_loss_title"
+        android:fontFamily="@font/consola"
+        android:textColor="@color/black"
+        android:layout_marginTop="15dp"
+        android:text="Game Over! Correct Number was 12"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/custom_dialog_loss_message"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true">
+        <Button
+            android:id="@+id/custom_dialog_loss_button_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/consola"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ic_custom_button_background"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/red"
+            android:layout_below="@id/custom_dialog_loss_message"
+            android:text="End Game" />
+
+        <Button
+            android:id="@+id/custom_dialog_loss_button_tryAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/custom_dialog_loss_button_exit"
+            android:fontFamily="@font/consola"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ic_custom_button_background"
+            android:layout_below="@id/custom_dialog_loss_message"
+            android:text="Try Again" />
+    </LinearLayout>
+
+
+</RelativeLayout>

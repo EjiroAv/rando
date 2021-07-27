@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">rando</string>
+
+    <!--    Main Menu Version 2 Activity -->
+    <string name="play">P L A Y</string>
+    <string name="score">S C O R E S</string>
+    <string name="exit">E X I T</string>
+
+    <!-- Game Activity Texts -->
+    <string name="total_points">Total Points: 0</string>
+    <string name="level">Level: 1</string>
+    <string name="game_main_text">Guess the Number</string>
+    <string name="game_hint_number_between">Hint: Number is between 0 and </string>
+    <string name="game_number_of_tries">Number Of Tries: 0</string>
+    <string name="game_button_text">S U B M I T</string>
+    <string name="game_editTextView_hint">Input answer</string>
+
+
+</resources>
