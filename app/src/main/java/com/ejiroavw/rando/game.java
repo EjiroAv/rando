@@ -19,6 +19,7 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -34,7 +35,7 @@ public class game extends AppCompatActivity {
     private EditText player_input;
     private TextView hint, tries, totalPoints, game_level, main_text, generating_number_animation_view;
     private Button submit;
-    private TableLayout game_status;
+    private LinearLayout game_status;
     private com.daimajia.numberprogressbar.NumberProgressBar progressBar;
     private RelativeLayout layout;
 
@@ -58,7 +59,6 @@ public class game extends AppCompatActivity {
         setContentView(R.layout.activity_game_test);
         getSupportActionBar().hide();
         initview();
-        setupUI(findViewById(R.id.layout));
         setViewsInvisible();
         layout.setVisibility(View.VISIBLE);
 
@@ -83,26 +83,8 @@ public class game extends AppCompatActivity {
             },1000);
         }
 
-
-
-
-
-
-
-
-
-        //To Display Total Points of User
-        if (totalPoints_accumulated == 0) {
-//            totalPoints.setVisibility(View.INVISIBLE);
-            tries.setPadding(20, 0, 20, 0);
-        } else if ((totalPoints_accumulated > 0) && (totalPoints_accumulated <= 99)) {
-            tries.setPadding(17, 0, 17, 0);
-            totalPoints.setText("Total Points: " + totalPoints_accumulated);
-        } else {
-            game_status.setColumnShrinkable(2, true);
-        }
-
         game_level.setText("Level: " + level);
+        totalPoints.setText("Total Points: "+totalPoints_accumulated);
 
 
 //        setFinishOnTouchOutside(false);
@@ -137,6 +119,16 @@ public class game extends AppCompatActivity {
                 return false;
             }
         });
+
+        player_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    setupUI(findViewById(R.id.layout));
+                }
+            }
+        });
+
 
 
     }
@@ -178,6 +170,9 @@ public class game extends AppCompatActivity {
         return difficulty;
     }
 
+
+
+
     private void setViewsInvisible(){
         main_text.setVisibility(View.INVISIBLE);
         player_input.setVisibility(View.INVISIBLE);
@@ -202,6 +197,7 @@ public class game extends AppCompatActivity {
             }
         });
     }
+
 
     @Override
     public void onBackPressed() {
@@ -259,6 +255,7 @@ public class game extends AppCompatActivity {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
+
     }
 
 
@@ -274,6 +271,8 @@ public class game extends AppCompatActivity {
         }
 
     }
+
+
 
     //Initialise all the views and Objects From the ACTIVITY
 
@@ -437,32 +436,42 @@ public class game extends AppCompatActivity {
         String playerInput_string = player_input.getText().toString(); //Collect User Input
         player_input.setText(""); //Clear text in EditView so USER can easily input their next Guess
 
+
         //Check if the UserInput is the same as the number they have recently used: To prevent unnecessary Repetitiveness
         if ((previousPlayerInput == null) || (!previousPlayerInput.equals(playerInput_string))) {
             try {
                 previousPlayerInput = playerInput_string;
                 int playerInput = Integer.parseInt(playerInput_string);
-                if (playerInput == randomNumberGenerated) {
-                    System.out.println("Congratulations! You Guess the Correct Answer");
-                    player_input.setBackgroundColor(getColor(R.color.green));
-                    totalPoints_accumulated = totalPoints_accumulated + 20;  //calculate Total Points
-                    level = level + 1;
-                    System.out.println("Total Points : " + totalPoints_accumulated);
-                    createCustomDialog("win"); //Create a Dialog for Winning Game
-                } else {
-                    if (playerInput < randomNumberGenerated) {
-                        hint.setText("Try a Number Higher than " + playerInput_string);
-                        tries.setText("Number of Tries: " + numberOfTries);
-                        player_input.setBackgroundColor(getColor(R.color.red));
-                        player_input.requestFocus();
-                        showSoftKeybaord(game.this);
+                if (playerInput > setDifficulty(level)){
+                    hint.setText("Number is between 0 and "+setDifficulty(level));
+                    numberOfTries = numberOfTries - 1;
+                }else{
+                    if (playerInput == randomNumberGenerated) {
+                        System.out.println("Congratulations! You Guess the Correct Answer");
+                        player_input.setBackgroundColor(getColor(R.color.green));
+                        totalPoints_accumulated = totalPoints_accumulated + 20;  //calculate Total Points
+                        level = level + 1;
+                        System.out.println("Total Points : " + totalPoints_accumulated);
+                        createCustomDialog("win"); //Create a Dialog for Winning Game
                     } else {
+                        if (playerInput < randomNumberGenerated) {
+                        hint.setText("Try a Number Higher than " + playerInput_string);
+//                            hintType(playerInput,randomNumberGenerated);
+                            tries.setText("Number of Tries: " + numberOfTries);
+                            player_input.setBackgroundColor(getColor(R.color.red));
+                            player_input.requestFocus();
+                            showSoftKeybaord(game.this);
+                        } else {
                         hint.setText("Try a Number Lower than " + playerInput_string);
-                        tries.setText("Number of Tries: " + numberOfTries);
-                        player_input.setBackgroundColor(getColor(R.color.red));
-                        player_input.requestFocus();
-                        showSoftKeybaord(game.this);
+//                            hintType(playerInput,randomNumberGenerated);
+                            tries.setText("Number of Tries: " + numberOfTries);
+                            player_input.setBackgroundColor(getColor(R.color.red));
+                            player_input.requestFocus();
+                            showSoftKeybaord(game.this);
+
+                        }
                     }
+
                 }
 
             } catch (NumberFormatException e) {

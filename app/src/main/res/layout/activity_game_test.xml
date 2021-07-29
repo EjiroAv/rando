@@ -37,65 +37,56 @@
         android:textAlignment="center"
         android:textColor="@color/text_color" />
 
-    <TableLayout
+
+
+    <LinearLayout
         android:id="@+id/game_status_view"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="35dp"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/game_level_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_column="0"
+            android:background="@drawable/ic_custom_button_background"
+            android:fontFamily="@font/consola"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/level"
+            android:textColor="@color/text_color"
+            android:textSize="11sp" />
 
-        >
+        <TextView
+            android:id="@+id/game_numberOfTries_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_column="1"
+            android:background="@drawable/ic_custom_button_background"
+            android:fontFamily="@font/consola"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/game_number_of_tries"
+            android:textColor="@color/text_color"
+            android:textSize="11sp" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/game_level_view"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_column="0"
-                android:background="@drawable/ic_custom_button_background"
-                android:fontFamily="@font/consola"
-                android:gravity="center"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="@string/level"
-                android:textColor="@color/text_color"
-                android:textSize="11sp" />
-
-            <TextView
-                android:id="@+id/game_numberOfTries_view"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_column="1"
-                android:background="@drawable/ic_custom_button_background"
-                android:fontFamily="@font/consola"
-                android:gravity="center"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="@string/game_number_of_tries"
-                android:textColor="@color/text_color"
-                android:textSize="11sp" />
-
-            <TextView
-                android:id="@+id/game_total_points_view"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_column="2"
-                android:background="@drawable/ic_custom_button_background"
-                android:fontFamily="@font/consola"
-                android:gravity="center"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="@string/total_points"
-                android:textColor="@color/text_color"
-                android:textSize="11sp" />
-        </TableRow>
-
-
-    </TableLayout>
+        <TextView
+            android:id="@+id/game_total_points_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_column="2"
+            android:background="@drawable/ic_custom_button_background"
+            android:fontFamily="@font/consola"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/total_points"
+            android:textColor="@color/text_color"
+            android:textSize="11sp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/game_mainText_view"
