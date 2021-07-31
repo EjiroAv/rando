@@ -1,4 +1,4 @@
-**Rando is and Android App Based on the Popular Number Guessing Game where the computer Generates a Random number and the User has to Guess what that Number is.**
+**Rando is an Android App Based on the Popular Number Guessing Game where the computer Generates a Random number and the User has to Guess what that Number is.**
 
 >I started the Project to familiarise myself with some of the Aspects of Android Development and also to improve my Programming Skills.
 >The challenge for me was to see How much I can Improve on the Initial Number Guessing Game Algorithm
