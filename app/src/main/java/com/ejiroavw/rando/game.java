@@ -542,7 +542,7 @@ public class game extends AppCompatActivity {
                         System.out.println("Congratulations! You Guess the Correct Answer");
                         player_input.setBackgroundColor(getColor(R.color.green));
                         totalPoints_accumulated = totalPoints_accumulated + 20;  //calculate Total Points
-                        level = level + 10;
+                        level = level + 1;
                         System.out.println("Total Points : " + totalPoints_accumulated);
                         createCustomDialog("win"); //Create a Dialog for Winning Game
                     } else {
