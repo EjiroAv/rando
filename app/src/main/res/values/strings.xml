@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">rando</string>
+    <string name="app_name">Rando</string>
 
     <!--    Main Menu Version Strings-->
     <string name="play">P L A Y</string>

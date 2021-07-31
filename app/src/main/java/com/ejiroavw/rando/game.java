@@ -476,10 +476,6 @@ public class game extends AppCompatActivity {
                 positiveButton.setOnClickListener(v -> {
                     numberOfTries = 0;
                     previousPlayerInput = null;
-                    Intent reloadPage = new Intent(game.this, game.class);
-                    finish();
-                    startActivity(reloadPage);
-                    overridePendingTransition(0, 0);
                     dialog.dismiss();
                 });
                 negativeButton.setOnClickListener(v -> {
@@ -489,6 +485,7 @@ public class game extends AppCompatActivity {
                     editor.apply();
 
                     Intent gotoScoresPage = new Intent(game.this, scores.class);
+                    gotoScoresPage.putExtra("activity","main_menu");
                     finish();
                     startActivity(gotoScoresPage);
                     overridePendingTransition(0, 0);
