@@ -88,17 +88,8 @@ public class game extends AppCompatActivity {
 
 
 
-//        setFinishOnTouchOutside(false);
 
         submit.setOnClickListener(view -> {
-            //Prevent User from being able to Keep Trying after GameOver
-            /*if ((numberOfTries == 0) && (numberOfTries < limit)) {
-                mainAlgorithm();
-            } else {
-//                    tries.setVisibility(View.INVISIBLE);
-                createCustomDialog("loss");
-            }*/
-
             mainAlgorithm();
             setHintVisible();
 
