@@ -13,7 +13,7 @@
         android:layout_height="60dp"
         android:layout_below="@id/game_player_input_view"
         android:layout_marginLeft="80dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100dp"
         android:layout_marginRight="80dp"
         android:background="@drawable/ic_custom_button_background"
         android:fontFamily="monospace"
