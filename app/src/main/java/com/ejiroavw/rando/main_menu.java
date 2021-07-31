@@ -1,59 +1,33 @@
 package com.ejiroavw.rando;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 
 public class main_menu extends AppCompatActivity {
-    Switch light_dark_mode_switch;
+    SwitchCompat light_dark_mode_switch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu_test);
+        setContentView(R.layout.activity_main_menu);
         getSupportActionBar().hide();
         light_dark_mode_switch = findViewById(R.id.light_dark_mode_switch);
         if (Build.VERSION.SDK_INT >= 29){
-            SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
-            final SharedPreferences.Editor editor = sharedPreferences.edit();
-            final boolean isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn", false);
-
-            // When user reopens the app
-            // after applying dark/light mode
-            if (isDarkModeOn) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                light_dark_mode_switch.setChecked(true);
-            }
-            else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                light_dark_mode_switch.setChecked(false);
-            }
-            light_dark_mode_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked){
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        editor.putBoolean("isDarkModeOn", true);
-                        editor.apply();
-                    }else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        editor.putBoolean("isDarkModeOn", false);
-                        editor.apply();
-                    }
+            light_dark_mode_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
             });
         }else {
@@ -88,25 +62,17 @@ public class main_menu extends AppCompatActivity {
         Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
         Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
 
-        titleTextView.setText("Exit Game");
-        messageTextView.setText("Are you sure you want to EXIT Game?");
-        positiveButton.setText("No");
-        negativeButton.setText("Yes");
+        titleTextView.setText(getString(R.string.exit_dialog_title));
+        messageTextView.setText(getString(R.string.exit_dialog_message));
+        positiveButton.setText(getString(R.string.exit_dialog_positive_button));
+        negativeButton.setText(getString(R.string.exit_dialog_negative_button));
 
-        positiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        negativeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
-                dialog.dismiss();
-            }
+        positiveButton.setOnClickListener(v -> dialog.dismiss());
+        negativeButton.setOnClickListener(v -> {
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+            dialog.dismiss();
         });
 
         dialog.show();

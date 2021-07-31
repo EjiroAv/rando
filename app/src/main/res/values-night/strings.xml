@@ -1,19 +1,65 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">rando</string>
 
-    <!--    Main Menu Version 2 Activity -->
+    <!--    Main Menu Version Strings-->
     <string name="play">P L A Y</string>
     <string name="score">S C O R E S</string>
     <string name="exit">E X I T</string>
 
-    <!-- Game Activity Texts -->
-    <string name="total_points">Total Points: 0</string>
-    <string name="level">Level: 1</string>
+    <!--    Score Strings-->
+    <string name="no_score_found">"No points on Record, Play Game to get Points"</string>
+    <string name="score_rank_1_string">1. %1$d</string>
+    <string name="score_rank_2_string">1. %1$d</string>
+    <string name="score_rank_3_string">1. %1$d</string>
+    <string name="score_rank_4_string">1. %1$d</string>
+    <string name="score_rank_5_string">1. %1$d</string>
+
+    <!-- Game Strings -->
+    <string name="total_points">Total Points: %1$d</string>
+    <string name="level">Level: %1$d</string>
     <string name="game_main_text">Guess the Number</string>
     <string name="game_hint_number_between">Hint: Number is between 0 and </string>
-    <string name="game_number_of_tries">Number Of Tries: 0</string>
+    <string name="game_number_of_tries">Number Of Tries: %1$d</string>
     <string name="game_button_text">S U B M I T</string>
     <string name="game_editTextView_hint">Input answer</string>
+
+    <string name="view_total_points">Total Points: 20</string>
+    <string name="view_level">Level: 1</string>
+    <string name="view_hint_number_between">Hint: Number is between 0 and 20</string>
+    <string name="view_number_of_tries">Number Of Tries: 0</string>
+
+
+    <string name="exit_dialog_title">Exit Game</string>
+    <string name="exit_dialog_message">Are you Sure you want to EXIT Game?</string>
+    <string name="exit_dialog_positive_button">No</string>
+    <string name="exit_dialog_negative_button">Yes</string>
+
+    <string name="loss_dialog_title">Exceeded Number Of Tries!</string>
+    <string name="loss_dialog_message">Game Over! Correct Number was %1$d</string>
+    <string name="loss_dialog_positive_button">Try Again</string>
+    <string name="loss_dialog_negative_button">End Game</string>
+
+    <string name="hint_dialog_title">Hint!</string>
+    <string name="hint_dialog_button">Done</string>
+
+    <string name="win_dialog_title">Level Cleared!</string>
+    <string name="win_dialog_message">Congratulations! You Guessed the Correct Answer Total Point is %1$d</string>
+    <string name="win_dialog_positive_button">Continue</string>
+    <string name="win_dialog_negative_button">End Game</string>
+
+    <string name="end_of_game">You have Completed the Game</string>
+    <string name="random_number_for_animation">%1$d</string>
+    <string name="random_number_generation_done">Done</string>
+
+    <string name="hint_after_load">Number is Between 0 and %1$d</string>
+    <string name="game_hint_lower">Try a Number Lower than %1$s</string>
+    <string name="game_hint_higher">Try a Number Higher than %1$s</string>
+
+    <string name="hint_warning">You Just Guessed That!, Try another Number</string>
+    <string name="hint_button">Hint</string>
+    <string name="generating_number_str" tools:ignore="TypographyEllipsis">Generating Number ...</string>
+    <string name="generating_number_int_view">0</string>
+    <string name="switch_text">Light/Dark Mode</string>
 
 
 </resources>

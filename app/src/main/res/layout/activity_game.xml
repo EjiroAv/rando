@@ -1,34 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".game">
+    android:background="@color/background_color">
 
 
     <Button
         android:id="@+id/game_button_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_below="@id/game_player_input_view"
-        android:layout_marginTop="100dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="80dp"
         android:background="@drawable/ic_custom_button_background"
         android:fontFamily="monospace"
-        android:text="S U B M I T "
-        android:textColor="@color/black" />
+        android:text="@string/game_button_text"
+        android:textColor="@color/text_color" />
+
+    <Button
+        android:id="@+id/hint_button_view"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_below="@id/game_hint_view"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/white"
+        android:drawableStart="@drawable/ic_hint_drawable_light"
+        android:fontFamily="monospace"
+        android:padding="15dp"
+        android:text="@string/hint_button"
+        android:textAllCaps="false"
+        android:textColor="@color/text_color"
+        android:textSize="12sp" />
 
     <EditText
+        android:importantForAutofill="no"
         android:id="@+id/game_player_input_view"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/game_numberOfTries_view"
+        android:layout_below="@id/game_hint_view"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/ic_custom_button_background"
         android:ems="10"
-        android:fontFamily="monospace"
-        android:hint="Input answer"
+        android:fontFamily="@font/consola"
+        android:hint="@string/game_editTextView_hint"
         android:inputType="number"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/text_color" />
+
+
+    <LinearLayout
+        android:id="@+id/game_status_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="35dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/game_level_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_custom_button_background"
+            android:fontFamily="@font/consola"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/view_level"
+            android:textColor="@color/text_color"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/game_numberOfTries_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_custom_button_background"
+            android:fontFamily="@font/consola"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/view_number_of_tries"
+            android:textColor="@color/text_color"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/game_total_points_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_custom_button_background"
+            android:fontFamily="@font/consola"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/view_total_points"
+            android:textColor="@color/text_color"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/generating_number_animation_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/game_generating_number_animation_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/consola"
+            android:text="@string/generating_number_str"
+            android:textColor="@color/text_color" />
+
+        <TextView
+            android:id="@+id/game_generating_number_animation_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/number_progress_bar"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/consola"
+            android:text="@string/generating_number_int_view"
+            android:textColor="@color/text_color" />
+
+        <com.daimajia.numberprogressbar.NumberProgressBar
+            android:id="@+id/number_progress_bar"
+            style="@style/NumberProgressBar_Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/game_generating_number_animation_text"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            app:progress_max="100" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/game_hint_view"
@@ -36,49 +147,22 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/game_mainText_view"
         android:layout_centerHorizontal="true"
-        android:fontFamily="monospace"
-        android:text="Hint: Number is between 0 and 20"
-        android:textColor="@color/black" />
+        android:fontFamily="@font/consola"
+        android:text="@string/view_hint_number_between"
+        android:textColor="@color/text_color" />
 
-    <TextView
-        android:id="@+id/game_total_points_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="50dp"
-        android:fontFamily="monospace"
-        android:text="Total Points: 0 " />
-
-    <TextView
-        android:id="@+id/game_level_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="10dp"
-        android:fontFamily="monospace"
-        android:text="Level: 1 " />
 
     <TextView
         android:id="@+id/game_mainText_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/game_total_points_view"
+        android:layout_below="@id/game_status_view"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:fontFamily="monospace"
-        android:text="Guess the Number ?"
-        android:textColor="@color/black"
-        android:textSize="32dp" />
+        android:fontFamily="@font/segoe_ui"
+        android:text="@string/game_main_text"
+        android:textColor="@color/text_color"
+        android:textSize="32sp" />
 
-    <TextView
-        android:id="@+id/game_numberOfTries_view"
-        android:layout_marginTop="100dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:fontFamily="monospace"
-        android:layout_below="@id/game_mainText_view"
-        android:text="Number of Tries: 0 " />
 
 </RelativeLayout>

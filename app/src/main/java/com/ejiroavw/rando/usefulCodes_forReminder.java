@@ -326,6 +326,333 @@ public class usefulCodes_forReminder {
         System.out.println("hintType"+hintType);
         System.out.println("arithmeticOperation"+arithmeticOperation);
     }*/
+/*if (level <= 20) {
+            if (game_playerInput < randomNumberGenerated) {
+                hint.setText("Try a Number Higher than " + game_playerInput);
+            } else if (game_playerInput > randomNumberGenerated) {
+                hint.setText("Try a number Lower than " + game_playerInput);
+            }
+        } else if ((level >= 21) && (level <= 30)) {
+            if (numberOfTries == 3) {
+                if (randomNumberGenerated % 2 == 0) {
+                    hint.setText("Number is Even");
+                } else {
+                    hint.setText("Number is Odd");
+                }
+            } else {
+                if (game_playerInput < randomNumberGenerated) {
+                    hint.setText("Try a Number Higher than " + game_playerInput);
+                } else if (game_playerInput > randomNumberGenerated) {
+                    hint.setText("Try a number Lower than " + game_playerInput);
+                }
+            }
+        } else if ((level >= 31) && (level <= 40)) {
+            if (numberOfTries == 2) {
+                Random adr = new Random();
+                int operation = adr.nextInt(1);
+                int firstNumber = adr.nextInt(20) + 1;
+                int secondNumber = adr.nextInt(20) + 1;
+                int result;
 
+                if (operation == 0) {
+                    result = firstNumber + secondNumber;
+                    if (result > randomNumberGenerated) {
+                        hint.setText("Number is Lower than " + firstNumber + " + " + secondNumber);
+                    } else if (result < randomNumberGenerated) {
+                        hint.setText("Number is Greater than " + firstNumber + " + " + secondNumber);
+                    }
+                } else if (operation == 1) {
+                    result = firstNumber * secondNumber;
+                    if (result > randomNumberGenerated) {
+                        hint.setText("Number is Lower than " + firstNumber + " * " + secondNumber);
+                    } else if (result < randomNumberGenerated) {
+                        hint.setText("Number is Greater than " + firstNumber + " * " + secondNumber);
+                    }
+                }
+            } else if (numberOfTries == 3) {
+                if (randomNumberGenerated % 2 == 0) {
+                    hint.setText("Number is Even");
+                } else {
+                    hint.setText("Number is Odd");
+                }
+            } else if (numberOfTries == 4) {
+                if (randomNumberGenerated > 10) {
+                    int numberBreakDown = randomNumberGenerated;
+                    String numberBreakDownString = Integer.toString(numberBreakDown);
+                    char firstDigitChar = numberBreakDownString.charAt(0);
+                    char secondDigitChar = numberBreakDownString.charAt(1);
+                    Integer firstDigitInt = new Integer(Character.getNumericValue(firstDigitChar));
+                    Integer secondDigitInt = new Integer(Character.getNumericValue(secondDigitChar));
+                    int result;
+                    Random dr = new Random();
+                    int operation = dr.nextInt(1);
+                    if (operation == 0) {
+                        result = firstDigitInt + secondDigitInt;
+                        hint.setText("Add digits to get " + result);
+                    } else if (operation == 1) {
+                        result = firstDigitInt + secondDigitInt;
+                        hint.setText("Multiply digits to get " + result);
+                    }
+                }
+            } else {
+                if (game_playerInput < randomNumberGenerated) {
+                    hint.setText("Try a Number Higher than " + game_playerInput);
+                } else if (game_playerInput > randomNumberGenerated) {
+                    hint.setText("Try a number Lower than " + game_playerInput);
+                }
+            }
+        } else if ((level >= 41) && (level <= 50)) {
+            if (numberOfTries == 2) {
+                Random adr = new Random();
+                int operation = adr.nextInt(1);
+                int firstNumber = adr.nextInt(20) + 1;
+                int secondNumber = adr.nextInt(20) + 1;
+                int result;
+
+                if (operation == 0) {
+                    result = firstNumber + secondNumber;
+                    if (result > randomNumberGenerated) {
+                        hint.setText("Number is Lower than " + firstNumber + " + " + secondNumber);
+                    } else if (result < randomNumberGenerated) {
+                        hint.setText("Number is Greater than " + firstNumber + " + " + secondNumber);
+                    }
+                } else if (operation == 1) {
+                    result = firstNumber * secondNumber;
+                    if (result > randomNumberGenerated) {
+                        hint.setText("Number is Lower than " + firstNumber + " * " + secondNumber);
+                    } else if (result < randomNumberGenerated) {
+                        hint.setText("Number is Greater than " + firstNumber + " * " + secondNumber);
+                    }
+                }
+            } else if (numberOfTries == 3) {
+                if (randomNumberGenerated % 2 == 0) {
+                    hint.setText("Number is Even");
+                } else {
+                    hint.setText("Number is Odd");
+                }
+            } else if (numberOfTries == 4) {
+                if (randomNumberGenerated > 10) {
+                    int numberBreakDown = randomNumberGenerated;
+                    String numberBreakDownString = Integer.toString(numberBreakDown);
+                    char firstDigitChar = numberBreakDownString.charAt(0);
+                    char secondDigitChar = numberBreakDownString.charAt(1);
+                    Integer firstDigitInt = new Integer(Character.getNumericValue(firstDigitChar));
+                    Integer secondDigitInt = new Integer(Character.getNumericValue(secondDigitChar));
+                    int result;
+                    Random dr = new Random();
+                    int operation = dr.nextInt(1);
+                    if (operation == 0) {
+                        result = firstDigitInt + secondDigitInt;
+                        hint.setText("Add digits to get " + result);
+                    } else if (operation == 1) {
+                        result = firstDigitInt + secondDigitInt;
+                        hint.setText("Multiply digits to get " + result);
+                    }
+                }
+            } else if (numberOfTries == 5) {
+                if ((randomNumberGenerated <= 10) && (randomNumberGenerated >= (setDifficulty(level) - 10))) {
+                    if (game_playerInput < randomNumberGenerated) {
+                        hint.setText("Try a Number Higher than " + game_playerInput);
+                    } else if (game_playerInput > randomNumberGenerated) {
+                        hint.setText("Try a number Lower than " + game_playerInput);
+                    }
+                } else {
+                    int UpperBound = randomNumberGenerated + 10;
+                    int LowerBound = randomNumberGenerated - 10;
+                    hint.setText("Number is between " + LowerBound + " and " + UpperBound);
+                }
+            }
+        } else if ((level >= 51) && (level <= 60)) {
+            if (numberOfTries == 2) {
+                Random adr = new Random();
+                int operation = adr.nextInt(1);
+                int firstNumber = adr.nextInt(20) + 1;
+                int secondNumber = adr.nextInt(20) + 1;
+                int result;
+
+                if (operation == 0) {
+                    result = firstNumber + secondNumber;
+                    if (result > randomNumberGenerated) {
+                        hint.setText("Number is Lower than " + firstNumber + " + " + secondNumber);
+                    } else if (result < randomNumberGenerated) {
+                        hint.setText("Number is Greater than " + firstNumber + " + " + secondNumber);
+                    }
+                } else if (operation == 1) {
+                    result = firstNumber * secondNumber;
+                    if (result > randomNumberGenerated) {
+                        hint.setText("Number is Lower than " + firstNumber + " * " + secondNumber);
+                    } else if (result < randomNumberGenerated) {
+                        hint.setText("Number is Greater than " + firstNumber + " * " + secondNumber);
+                    }
+                }
+            } else if (numberOfTries == 3) {
+                if (randomNumberGenerated % 2 == 0) {
+                    hint.setText("Number is Even");
+                } else {
+                    hint.setText("Number is Odd");
+                }
+            } else if (numberOfTries == 4) {
+                if (randomNumberGenerated > 10) {
+                    int numberBreakDown = randomNumberGenerated;
+                    String numberBreakDownString = Integer.toString(numberBreakDown);
+                    char firstDigitChar = numberBreakDownString.charAt(0);
+                    char secondDigitChar = numberBreakDownString.charAt(1);
+                    Integer firstDigitInt = new Integer(Character.getNumericValue(firstDigitChar));
+                    Integer secondDigitInt = new Integer(Character.getNumericValue(secondDigitChar));
+                    int result;
+                    Random dr = new Random();
+                    int operation = dr.nextInt(1);
+                    if (operation == 0) {
+                        result = firstDigitInt + secondDigitInt;
+                        hint.setText("Add digits to get " + result);
+                    } else if (operation == 1) {
+                        result = firstDigitInt + secondDigitInt;
+                        hint.setText("Multiply digits to get " + result);
+                    }
+                }
+            } else if (numberOfTries == 5) {
+                if ((randomNumberGenerated <= 10) && (randomNumberGenerated >= (setDifficulty(level) - 10))) {
+                    if (game_playerInput < randomNumberGenerated) {
+                        hint.setText("Try a Number Higher than " + game_playerInput);
+                    } else if (game_playerInput > randomNumberGenerated) {
+                        hint.setText("Try a number Lower than " + game_playerInput);
+                    }
+                } else {
+                    int UpperBound = randomNumberGenerated + 10;
+                    int LowerBound = randomNumberGenerated - 10;
+                    hint.setText("Number is between " + LowerBound + " and " + UpperBound);
+                }
+            } else if (numberOfTries == 6) {
+                if ((randomNumberGenerated < (game_playerInput - 5)) && (randomNumberGenerated > (game_playerInput + 5))) {
+                    Random orn = new Random();
+                    if (game_playerInput > randomNumberGenerated) {
+                        hint.setText("Number is Not " + (game_playerInput - 5));
+                    } else if (game_playerInput < randomNumberGenerated) {
+                        hint.setText("Number is not " + (game_playerInput + 5));
+                    }
+                }
+            }
+
+        } else if ((level >= 61) && (level <= 100)) {
+            if (numberOfTries == 2) {
+                Random adr = new Random();
+                int operation = adr.nextInt(1);
+                int firstNumber = adr.nextInt(20) + 1;
+                int secondNumber = adr.nextInt(20) + 1;
+                int result;
+
+                if (operation == 0) {
+                    result = firstNumber + secondNumber;
+                    if (result > randomNumberGenerated) {
+                        hint.setText("Number is Lower than " + firstNumber + " + " + secondNumber);
+                    } else if (result < randomNumberGenerated) {
+                        hint.setText("Number is Greater than " + firstNumber + " + " + secondNumber);
+                    }
+                } else if (operation == 1) {
+                    result = firstNumber * secondNumber;
+                    if (result > randomNumberGenerated) {
+                        hint.setText("Number is Lower than " + firstNumber + " * " + secondNumber);
+                    } else if (result < randomNumberGenerated) {
+                        hint.setText("Number is Greater than " + firstNumber + " * " + secondNumber);
+                    }
+                }
+            } else if (numberOfTries == 3) {
+                if (randomNumberGenerated % 2 == 0) {
+                    hint.setText("Number is Even");
+                } else {
+                    hint.setText("Number is Odd");
+                }
+            } else if (numberOfTries == 4) {
+                if (randomNumberGenerated > 10) {
+                    int numberBreakDown = randomNumberGenerated;
+                    String numberBreakDownString = Integer.toString(numberBreakDown);
+                    char firstDigitChar = numberBreakDownString.charAt(0);
+                    char secondDigitChar = numberBreakDownString.charAt(1);
+                    Integer firstDigitInt = new Integer(Character.getNumericValue(firstDigitChar));
+                    Integer secondDigitInt = new Integer(Character.getNumericValue(secondDigitChar));
+                    int result;
+                    Random dr = new Random();
+                    int operation = dr.nextInt(1);
+                    if (operation == 0) {
+                        result = firstDigitInt + secondDigitInt;
+                        hint.setText("Add digits to get " + result);
+                    } else if (operation == 1) {
+                        result = firstDigitInt + secondDigitInt;
+                        hint.setText("Multiply digits to get " + result);
+                    }
+                }
+            } else if (numberOfTries == 5) {
+                if ((randomNumberGenerated <= 10) && (randomNumberGenerated >= (setDifficulty(level) - 10))) {
+                    if (game_playerInput < randomNumberGenerated) {
+                        hint.setText("Try a Number Higher than " + game_playerInput);
+                    } else if (game_playerInput > randomNumberGenerated) {
+                        hint.setText("Try a number Lower than " + game_playerInput);
+                    }
+                } else {
+                    int UpperBound = randomNumberGenerated + 10;
+                    int LowerBound = randomNumberGenerated - 10;
+                    hint.setText("Number is between " + LowerBound + " and " + UpperBound);
+                }
+            } else if (numberOfTries == 6) {
+                if ((randomNumberGenerated < (game_playerInput - 5)) && (randomNumberGenerated > (game_playerInput + 5))) {
+                    Random orn = new Random();
+                    if (game_playerInput > randomNumberGenerated) {
+                        hint.setText("Number is Not " + (game_playerInput - 5));
+                    } else if (game_playerInput < randomNumberGenerated) {
+                        hint.setText("Number is not " + (game_playerInput + 5));
+                    }
+                }
+            } else if (numberOfTries == 7) {
+                int numberBreakDown = randomNumberGenerated;
+                String numberBreakDownString = Integer.toString(numberBreakDown);
+                char firstDigitChar = numberBreakDownString.charAt(0);
+                char secondDigitChar = numberBreakDownString.charAt(1);
+                Integer firstDigitInt = new Integer(Character.getNumericValue(firstDigitChar));
+                Integer secondDigitInt = new Integer(Character.getNumericValue(secondDigitChar));
+                Random srn = new Random();
+
+                if (randomNumberGenerated <= 10) {
+                    if (randomNumberGenerated % 2 == 0) {
+                        hint.setText("Number is Even");
+                    } else {
+                        hint.setText("Number is Odd");
+                    }
+                } else if (randomNumberGenerated >= 11) {
+                    int option = srn.nextInt(1);
+                    if (option == 1) {
+                        if (firstDigitInt == 0) {
+                            hint.setText("One of the Digits has the same shape as an Alphabetical Letter");
+                        } else if (firstDigitInt == 1) {
+                            hint.setText("My number cannot be Divisible by Any number");
+                        } else if (firstDigitInt == 2) {
+                            hint.setText("One of My Digits results in an even number every time you add it to itself");
+                        } else if (firstDigitInt == 3) {
+                            hint.setText("One of the Digits Is the same number as the Blades on a Fan");
+                        }else if (firstDigitInt == 4){
+                            hint.setText("One of the Digits is the sum of 2 numbers \n and \n " +
+                                    "also the result of the multiplication of the same 2 numbers ");
+                        }else if (firstDigitInt == 5){
+                            hint.setText("One of the Digits is Only Divisible by 1 and itself");
+                        }else if (firstDigitInt == 6){
+                            hint.setText("One of the Digits is the Number of wheels on 3 Bicycles");
+                        }else if (firstDigitInt == 7){
+                            hint.setText("One of the Digits is Even after a Letter is removed");
+                        }else if (firstDigitInt == 8){
+                            hint.setText("One of the Digits is a result of 2x + 4");
+                        }else if (firstDigitInt == 9){
+                            hint.setText("One of the Digits is Just a number turned Upside down");
+                        }
+                    }else if(option == 0){
+                        if (secondDigitInt < firstDigitInt){
+                            hint.setText("First Digit is Greater than Second Digit");
+                        }else if (secondDigitInt > firstDigitInt){
+                            hint.setText("Second Digit is Greater than Second Number");
+                        }
+                    }
+                }
+
+            }
+        }
+    */
 
 }

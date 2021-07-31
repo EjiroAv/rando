@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    tools:context=".game">
+
+
+    <Button
+        android:id="@+id/game_button_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game_player_input_view"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/ic_custom_button_background"
+        android:fontFamily="monospace"
+        android:text="@string/game_button_text"
+        android:textColor="@color/text_color" />
+
+    <EditText
+        android:importantForAutofill="no"
+        android:id="@+id/game_player_input_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/game_numberOfTries_view"
+        android:layout_centerHorizontal="true"
+        android:textColorHint="@color/text_color"
+        android:ems="10"
+        android:fontFamily="monospace"
+        android:hint="@string/game_editTextView_hint"
+        android:background="@drawable/ic_custom_button_background"
+        android:inputType="number"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/game_hint_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game_mainText_view"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="monospace"
+        android:text="@string/view_hint_number_between"
+        android:textColor="@color/text_color" />
+
+    <TextView
+        android:id="@+id/game_total_points_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:fontFamily="monospace"
+        android:textColor="@color/text_color"
+        android:text="@string/view_total_points"
+        tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/game_level_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="10dp"
+        android:fontFamily="monospace"
+        android:textColor="@color/text_color"
+        android:text="@string/view_level" />
+
+    <TextView
+        android:id="@+id/game_mainText_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game_total_points_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:fontFamily="monospace"
+        android:text="@string/game_main_text"
+        android:textColor="@color/text_color"
+        android:textSize="32sp" />
+
+    <TextView
+        android:id="@+id/game_numberOfTries_view"
+        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:fontFamily="monospace"
+        android:layout_below="@id/game_mainText_view"
+        android:textColor="@color/text_color"
+        android:text="@string/view_number_of_tries" />
+
+</RelativeLayout>

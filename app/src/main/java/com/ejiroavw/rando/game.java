@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.util.Random;
@@ -34,12 +33,13 @@ public class game extends AppCompatActivity {
 
     private EditText player_input;
     private TextView hint, tries, totalPoints, game_level, main_text, generating_number_animation_view;
-    private Button submit;
+    private Button submit, hint_button;
     private LinearLayout game_status;
     private com.daimajia.numberprogressbar.NumberProgressBar progressBar;
     private RelativeLayout layout;
 
     public static int level = 1;
+    public static int limit = 0;
 
     //Generate Random Number
     Random rn = new Random();
@@ -52,136 +52,262 @@ public class game extends AppCompatActivity {
     //Previous Player Input
     public static String previousPlayerInput;
 
+    public static String msg;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_test);
+        setContentView(R.layout.activity_game);
         getSupportActionBar().hide();
         initview();
         setViewsInvisible();
         layout.setVisibility(View.VISIBLE);
 
-        handler = new Handler();{
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
+        handler = new Handler();
+        {
+            handler.postDelayed(() -> {
 
-                    Thread thread  = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            for (int i=0; i <100; i++){
-                                updateProgressBar();
-                                generatingNumberAnimation();
-                                SystemClock.sleep(20);
-                            }
-                            finishGeneratingNumberAnimation();
-                        }
-                    });
-                    thread.start();
-                }
-            },1000);
+                Thread thread = new Thread(() -> {
+                    for (int i = 0; i < 100; i++) {
+                        updateProgressBar();
+                        generatingNumberAnimation();
+                        SystemClock.sleep(20);
+                    }
+                    finishGeneratingNumberAnimation();
+                });
+                thread.start();
+            }, 1000);
         }
 
-        game_level.setText("Level: " + level);
-        totalPoints.setText("Total Points: "+totalPoints_accumulated);
+        game_level.setText(getString(R.string.level,level));
+        totalPoints.setText(getString(R.string.total_points,totalPoints_accumulated));
+        System.out.println(randomNumberGenerated);
+
+
 
 
 //        setFinishOnTouchOutside(false);
 
-        submit.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View view) {
-                //Prevent User from being able to Keep Trying after GameOver
-                if (numberOfTries <= 4) {
-                    mainAlgorithm();
-                } else {
-                    tries.setVisibility(View.INVISIBLE);
-                    createCustomDialog("loss");
-                }
+        submit.setOnClickListener(view -> {
+            //Prevent User from being able to Keep Trying after GameOver
+            /*if ((numberOfTries == 0) && (numberOfTries < limit)) {
+                mainAlgorithm();
+            } else {
+//                    tries.setVisibility(View.INVISIBLE);
+                createCustomDialog("loss");
+            }*/
 
+            mainAlgorithm();
+            setHintVisible();
+
+
+        });
+
+        player_input.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    hideSoftKeyboard(game.this);
+                }
+            }
+            return false;
+        });
+
+        player_input.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                setupUI(findViewById(R.id.layout));
             }
         });
 
-        player_input.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    switch (keyCode) {
-                        case KeyEvent.KEYCODE_ENTER:
-                            hideSoftKeyboard(game.this);
-
-                        default:
-                            break;
-                    }
-                }
-                return false;
-            }
-        });
-
-        player_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    setupUI(findViewById(R.id.layout));
-                }
-            }
-        });
-
+        hint_button.setOnClickListener(v -> createCustomDialog("hint"));
 
 
     }
 
-    private  int  setDifficulty(int level){
-        int difficulty = 0 ;
-        if ((level >= 1) && (level <= 10)){
-             difficulty = 10;
-        }else if  ((level >= 11) && (level <= 20)){
-             difficulty = 20;
-        }
-        else if  ((level >= 21) && (level <= 30)){
+    private int setDifficulty(int level) {
+        int difficulty = 0;
+        if ((level >= 1) && (level <= 10)) {
+            difficulty = 10;
+        } else if ((level >= 11) && (level <= 20)) {
+            difficulty = 20;
+        } else if ((level >= 21) && (level <= 30)) {
             difficulty = 30;
-        }
-        else if  ((level >= 31) && (level <= 40)){
+        } else if ((level >= 31) && (level <= 40)) {
             difficulty = 40;
-        }
-        else if  ((level >= 41) && (level <= 50)){
+        } else if ((level >= 41) && (level <= 50)) {
             difficulty = 50;
-        }
-        else if  ((level >= 51) && (level <= 60)){
+        } else if ((level >= 51) && (level <= 60)) {
             difficulty = 60;
-        }
-        else if  ((level >= 61) && (level <= 70)){
+        } else if ((level >= 61) && (level <= 70)) {
             difficulty = 70;
-        }
-        else if  ((level >= 71) && (level <= 80)){
+        } else if ((level >= 71) && (level <= 80)) {
             difficulty = 80;
-        }
-        else if  ((level >= 81) && (level <= 90)){
+        } else if ((level >= 81) && (level <= 90)) {
             difficulty = 90;
-        }
-        else if  ((level >= 91) && (level <= 100)){
+        } else if ((level >= 91) && (level <= 100)) {
             difficulty = 100;
-        }
-        else {
-            hint.setText("You have Completed the game");
+        } else {
+            hint.setText(getString(R.string.end_of_game));
         }
         return difficulty;
     }
 
+    private void setHint(int game_playerInput) {
+        Random shr = new Random();
+        int options = 0;
+        if (level <= 10) {
+            options = shr.nextInt(1);
+        } else if ((level >= 11) && (level <= 30)) {
+            options = shr.nextInt(2);
+        } else if ((level >= 31) && (level <= 40)) {
+            options = shr.nextInt(3);
+        } else if ((level >= 41) && (level <= 50)) {
+            options = shr.nextInt(4);
+        } else if ((level >= 51) && (level <= 60)) {
+            options = shr.nextInt(5);
+        } else if ((level >= 61) && (level <= 100)) {
+            options = shr.nextInt(6);
+        }
+        if (options == 0) {
+            Random adr = new Random();
+            int operation = adr.nextInt(1);
+            int firstNumber = adr.nextInt(20) + 1;
+            int secondNumber = adr.nextInt(20) + 1;
+            int result;
 
 
+            if (operation == 0) {
+                result = firstNumber + secondNumber;
+                if (result > randomNumberGenerated) {
+                    msg = ("Number is Lower than " + firstNumber + " + " + secondNumber);
+                } else if (result < randomNumberGenerated) {
+                    msg = ("Number is Greater than " + firstNumber + " + " + secondNumber);
+                }
+            } else if (operation == 1) {
+                result = firstNumber * secondNumber;
+                if (result > randomNumberGenerated) {
+                    msg = ("Number is Lower than " + firstNumber + " * " + secondNumber);
+                } else if (result < randomNumberGenerated) {
+                    msg = ("Number is Greater than " + firstNumber + " * " + secondNumber);
+                }
+            }
+        } else if (options == 1) {
+            if (randomNumberGenerated % 2 == 0) {
+                msg = ("Number is Even");
+            } else {
+                 msg = ("Number is Odd");
+            }
+        } else if (options == 2) {
+            if (randomNumberGenerated > 10) {
+                int numberBreakDown = randomNumberGenerated;
+                String numberBreakDownString = Integer.toString(numberBreakDown);
+                char firstDigitChar = numberBreakDownString.charAt(0);
+                char secondDigitChar = numberBreakDownString.charAt(1);
+                int firstDigitInt = Character.getNumericValue(firstDigitChar);
+                int secondDigitInt = Character.getNumericValue(secondDigitChar);
+                int result;
+                Random dr = new Random();
+                int operation = dr.nextInt(1);
+                if (operation == 0) {
+                    result = firstDigitInt + secondDigitInt;
+                    msg = ("Add digits to get " + result);
+                } else if (operation == 1) {
+                    result = firstDigitInt + secondDigitInt;
+                    msg = ("Multiply digits to get " + result);
+                }
+            }
+        } else if (options == 3) {
+            if ((randomNumberGenerated <= 10) && (randomNumberGenerated >= (setDifficulty(level) - 10))) {
+                if (game_playerInput < randomNumberGenerated) {
+                    msg = ("Try a Number Higher than " + game_playerInput);
+                } else if (game_playerInput > randomNumberGenerated) {
+                    msg = ("Try a number Lower than " + game_playerInput);
+                }
+            } else {
+                int UpperBound = randomNumberGenerated + 10;
+                int LowerBound = randomNumberGenerated - 10;
+                 msg = ("Number is between " + LowerBound + " and " + UpperBound);
+            }
+        } else if (options == 4) {
+            if ((randomNumberGenerated < (game_playerInput - 5)) && (randomNumberGenerated > (game_playerInput + 5))) {
+                if (game_playerInput > randomNumberGenerated) {
+                    msg = ("Number is Not " + (game_playerInput - 5));
+                } else if (game_playerInput < randomNumberGenerated) {
+                    msg = ("Number is not " + (game_playerInput + 5));
+                }
+            }
+        } else if (options == 5) {
+            int numberBreakDown = randomNumberGenerated;
+            String numberBreakDownString = Integer.toString(numberBreakDown);
+            char firstDigitChar = numberBreakDownString.charAt(0);
+            char secondDigitChar = numberBreakDownString.charAt(1);
+            int firstDigitInt = Character.getNumericValue(firstDigitChar);
+            int secondDigitInt = Character.getNumericValue(secondDigitChar);
+            Random srn = new Random();
 
-    private void setViewsInvisible(){
+            if (randomNumberGenerated <= 10) {
+                if (randomNumberGenerated % 2 == 0) {
+                    msg = ("Number is Even");
+                } else {
+                    msg = ("Number is Odd");
+                }
+            } else if (randomNumberGenerated >= 11) {
+                int option = srn.nextInt(1);
+                if (option == 1) {
+                    if (firstDigitInt == 0) {
+                        msg = ("One of the Digits has the same shape as an Alphabetical Letter");
+                    } else if (firstDigitInt == 1) {
+                        msg = ("My number cannot be Divisible by Any number");
+                    } else if (firstDigitInt == 2) {
+                        msg = ("One of My Digits results in an even number every time you add it to itself");
+                    } else if (firstDigitInt == 3) {
+                        msg = ("One of the Digits Is the same number as the Blades on a Fan");
+                    } else if (firstDigitInt == 4) {
+                        msg = ("One of the Digits is the sum of 2 numbers \n and \n " +
+                                "also the result of the multiplication of the same 2 numbers ");
+                    } else if (firstDigitInt == 5) {
+                        msg = ("One of the Digits is Only Divisible by 1 and itself");
+                    } else if (firstDigitInt == 6) {
+                        msg = ("One of the Digits is the Number of wheels on 3 Bicycles");
+                    } else if (firstDigitInt == 7) {
+                        msg = ("One of the Digits is Even after a Letter is removed");
+                    } else if (firstDigitInt == 8) {
+                        msg = ("One of the Digits is a result of 2x + 4");
+                    } else if (firstDigitInt == 9) {
+                        msg = ("One of the Digits is Just a number turned Upside down");
+                    }
+                } else if (option == 0) {
+                    if (secondDigitInt < firstDigitInt) {
+                        msg = ("First Digit is Greater than Second Digit");
+                    } else if (secondDigitInt > firstDigitInt) {
+                        msg = ("Second Digit is Greater than Second Number");
+                    }
+                }
+            }
+
+        }
+
+    }
+
+
+    private void setHintVisible(){
+        if (numberOfTries >= 3) {
+            hint_button.setVisibility(View.VISIBLE);
+        } else if (numberOfTries < 3) {
+            hint_button.setVisibility(View.INVISIBLE);
+        }
+    }
+    private void setViewsInvisible() {
         main_text.setVisibility(View.INVISIBLE);
         player_input.setVisibility(View.INVISIBLE);
+        hint_button.setVisibility(View.INVISIBLE);
         submit.setVisibility(View.INVISIBLE);
         game_status.setVisibility(View.INVISIBLE);
         hint.setVisibility(View.INVISIBLE);
     }
 
-    private void setViewsVisible(){
+    private void setViewsVisible() {
         main_text.setVisibility(View.VISIBLE);
         player_input.setVisibility(View.VISIBLE);
         submit.setVisibility(View.VISIBLE);
@@ -189,13 +315,8 @@ public class game extends AppCompatActivity {
         hint.setVisibility(View.VISIBLE);
     }
 
-    private void updateProgressBar(){
-        game.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.incrementProgressBy(1);
-            }
-        });
+    private void updateProgressBar() {
+        game.this.runOnUiThread(() -> progressBar.incrementProgressBy(1));
     }
 
 
@@ -205,44 +326,30 @@ public class game extends AppCompatActivity {
     }
 
     private void generatingNumberAnimation() {
-        game.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Random gna = new Random();
-                int randomNumberForAnimation = gna.nextInt(100 )+1;
-                generating_number_animation_view.setText(""+randomNumberForAnimation+"");
-            }
+        game.this.runOnUiThread(() -> {
+            Random gna = new Random();
+            int randomNumberForAnimation = gna.nextInt(100) + 1;
+            generating_number_animation_view.setText(getString(R.string.random_number_for_animation,randomNumberForAnimation));
         });
 
-}
+    }
 
-    private void finishGeneratingNumberAnimation(){
-        game.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                generating_number_animation_view.setText("Done");
-                handler = new Handler();{
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-//                            generating_number_animation_view.setVisibility(View.INVISIBLE);
-//                            progressBar.setVisibility(View.INVISIBLE);
-                            layout.setVisibility(View.INVISIBLE);
-                        }
-                    },2000);
-                }
-
-                handler = new Handler();{
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            setViewsVisible();
-                            hint.setText("Number is Between 0 and "+setDifficulty(level));
-                        }
-                    },2000);
-                }
-
+    private void finishGeneratingNumberAnimation() {
+        game.this.runOnUiThread(() -> {
+            generating_number_animation_view.setText(getString(R.string.random_number_generation_done));
+            handler = new Handler();
+            {
+                handler.postDelayed(() -> layout.setVisibility(View.INVISIBLE), 1000);
             }
+
+            handler = new Handler();
+            {
+                handler.postDelayed(() -> {
+                    setViewsVisible();
+                    hint.setText(getString(R.string.hint_after_load,setDifficulty(level)));
+                }, 1000);
+            }
+
         });
     }
 
@@ -261,17 +368,20 @@ public class game extends AppCompatActivity {
 
     public void setupUI(View view) {
         if (!(view instanceof EditText)) {
-            view.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    hideSoftKeyboard(game.this);
-                    return false;
+            view.setOnTouchListener((v, event) -> {
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        hideSoftKeyboard(game.this);
+                    break;
+                    case MotionEvent.ACTION_UP:
+                        v.performClick();
+                    break;
                 }
+                return false;
             });
         }
 
     }
-
 
 
     //Initialise all the views and Objects From the ACTIVITY
@@ -289,30 +399,30 @@ public class game extends AppCompatActivity {
         generating_number_animation_view = findViewById(R.id.game_generating_number_animation_view);
         progressBar = findViewById(R.id.number_progress_bar);
         layout = findViewById(R.id.generating_number_animation_layout);
+        hint_button = findViewById(R.id.hint_button_view);
     }
 
     // Create Dialog for Different Case Scenarios
 
-    public void createCustomDialog(String type){
-        if (type == "loss"){
-            final Dialog dialog = new Dialog(game.this);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setCancelable(false);
-            dialog.setContentView(R.layout.activity_custom_dialog);
+    public void createCustomDialog(String type) {
+        switch (type) {
+            case "loss": {
+                final Dialog dialog = new Dialog(game.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(false);
+                dialog.setContentView(R.layout.activity_custom_dialog);
 
-            TextView titleTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_title);
-            TextView messageTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_message);
-            Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
-            Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
+                TextView titleTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_title);
+                TextView messageTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_message);
+                Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
+                Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
 
-            titleTextView.setText("Exceeded Number Of Tries!");
-            messageTextView.setText("Game Over! Correct Number was " + randomNumberGenerated);
-            positiveButton.setText("Try Again");
-            negativeButton.setText("End Game");
+                titleTextView.setText(getString(R.string.loss_dialog_title));
+                messageTextView.setText(getString(R.string.loss_dialog_message, randomNumberGenerated));
+                positiveButton.setText(getString(R.string.loss_dialog_positive_button));
+                negativeButton.setText(getString(R.string.loss_dialog_negative_button));
 
-            positiveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                positiveButton.setOnClickListener(v -> {
                     numberOfTries = 0;
                     previousPlayerInput = null;
                     Intent reloadPage = new Intent(game.this, game.class);
@@ -320,41 +430,36 @@ public class game extends AppCompatActivity {
                     startActivity(reloadPage);
                     overridePendingTransition(0, 0);
                     dialog.dismiss();
-                }
-            });
-            negativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                });
+                negativeButton.setOnClickListener(v -> {
                     numberOfTries = 0;
                     previousPlayerInput = null;
                     Intent endGame = new Intent(game.this, main_menu.class);
                     startActivity(endGame);
                     dialog.dismiss();
-                }
-            });
+                });
 
-            dialog.show();
+                dialog.show();
 
-        }else if (type == "win"){
-            final Dialog dialog = new Dialog(game.this);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setCancelable(false);
-            dialog.setContentView(R.layout.activity_custom_dialog);
+                break;
+            }
+            case "win": {
+                final Dialog dialog = new Dialog(game.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(false);
+                dialog.setContentView(R.layout.activity_custom_dialog);
 
-            TextView titleTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_title);
-            TextView messageTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_message);
-            Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
-            Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
+                TextView titleTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_title);
+                TextView messageTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_message);
+                Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
+                Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
 
-            titleTextView.setText("Level Cleared!");
-            messageTextView.setText("Congratulations! You Guess the Correct Answer \n" +
-                    "Total Point is : " + totalPoints_accumulated);
-            positiveButton.setText("Continue");
-            negativeButton.setText("End Game");
+                titleTextView.setText(getString(R.string.win_dialog_title));
+                messageTextView.setText(getString(R.string.win_dialog_message, totalPoints_accumulated));
+                positiveButton.setText(getString(R.string.win_dialog_positive_button));
+                negativeButton.setText(getString(R.string.win_dialog_negative_button));
 
-            positiveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                positiveButton.setOnClickListener(v -> {
                     numberOfTries = 0;
                     previousPlayerInput = null;
                     Intent reloadPage = new Intent(game.this, game.class);
@@ -362,40 +467,36 @@ public class game extends AppCompatActivity {
                     startActivity(reloadPage);
                     overridePendingTransition(0, 0);
                     dialog.dismiss();
-                }
-            });
-            negativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                });
+                negativeButton.setOnClickListener(v -> {
                     numberOfTries = 0;
                     previousPlayerInput = null;
                     Intent endGame = new Intent(game.this, main_menu.class);
                     startActivity(endGame);
                     dialog.dismiss();
-                }
-            });
+                });
 
-            dialog.show();
+                dialog.show();
 
-        }else if (type == "exit"){
-            final Dialog dialog = new Dialog(game.this);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setCancelable(false);
-            dialog.setContentView(R.layout.activity_custom_dialog);
+                break;
+            }
+            case "exit": {
+                final Dialog dialog = new Dialog(game.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(false);
+                dialog.setContentView(R.layout.activity_custom_dialog);
 
-            TextView titleTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_title);
-            TextView messageTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_message);
-            Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
-            Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
+                TextView titleTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_title);
+                TextView messageTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_message);
+                Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
+                Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
 
-            titleTextView.setText("Exit Game");
-            messageTextView.setText("Are you sure You want to Exit Game");
-            positiveButton.setText("No");
-            negativeButton.setText("Yes");
+                titleTextView.setText(getString(R.string.exit_dialog_title));
+                messageTextView.setText(getString(R.string.exit_dialog_message));
+                positiveButton.setText(getString(R.string.exit_dialog_positive_button));
+                negativeButton.setText(getString(R.string.exit_dialog_negative_button));
 
-            positiveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                positiveButton.setOnClickListener(v -> {
                     numberOfTries = 0;
                     previousPlayerInput = null;
                     Intent reloadPage = new Intent(game.this, game.class);
@@ -403,14 +504,11 @@ public class game extends AppCompatActivity {
                     startActivity(reloadPage);
                     overridePendingTransition(0, 0);
                     dialog.dismiss();
-                }
-            });
-            negativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SharedPreferences preference  = getSharedPreferences("PREF",0);
+                });
+                negativeButton.setOnClickListener(v -> {
+                    SharedPreferences preference = getSharedPreferences("PREF", 0);
                     SharedPreferences.Editor editor = preference.edit();
-                    editor.putInt("total_points",totalPoints_accumulated);
+                    editor.putInt("total_points", totalPoints_accumulated);
                     editor.apply();
 
                     Intent gotoScoresPage = new Intent(game.this, scores.class);
@@ -418,13 +516,37 @@ public class game extends AppCompatActivity {
                     startActivity(gotoScoresPage);
                     overridePendingTransition(0, 0);
                     dialog.dismiss();
-                }
-            });
+                });
 
-            dialog.show();
+                dialog.show();
 
+                break;
+            }
+            case "hint": {
+                final Dialog dialog = new Dialog(game.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(false);
+                dialog.setContentView(R.layout.activity_custom_dialog);
+
+                TextView titleTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_title);
+                TextView messageTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_message);
+                Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
+                Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
+
+                titleTextView.setText(getString(R.string.hint_dialog_title));
+                messageTextView.setText(msg);
+                positiveButton.setText(getString(R.string.hint_dialog_button));
+                negativeButton.setVisibility(View.GONE);
+
+                positiveButton.setOnClickListener(v -> dialog.dismiss());
+                dialog.show();
+
+                break;
+            }
         }
     }
+
+
 
 
     //Check If user Input(or User Guess) is the same as random Number Generated
@@ -442,34 +564,29 @@ public class game extends AppCompatActivity {
             try {
                 previousPlayerInput = playerInput_string;
                 int playerInput = Integer.parseInt(playerInput_string);
-                if (playerInput > setDifficulty(level)){
-                    hint.setText("Number is between 0 and "+setDifficulty(level));
+                if (playerInput > setDifficulty(level)) {
+                    hint.setText(getString(R.string.hint_after_load));
                     numberOfTries = numberOfTries - 1;
-                }else{
+                } else {
                     if (playerInput == randomNumberGenerated) {
                         System.out.println("Congratulations! You Guess the Correct Answer");
                         player_input.setBackgroundColor(getColor(R.color.green));
                         totalPoints_accumulated = totalPoints_accumulated + 20;  //calculate Total Points
-                        level = level + 1;
+                        level = level + 10;
                         System.out.println("Total Points : " + totalPoints_accumulated);
                         createCustomDialog("win"); //Create a Dialog for Winning Game
                     } else {
                         if (playerInput < randomNumberGenerated) {
-                        hint.setText("Try a Number Higher than " + playerInput_string);
-//                            hintType(playerInput,randomNumberGenerated);
-                            tries.setText("Number of Tries: " + numberOfTries);
-                            player_input.setBackgroundColor(getColor(R.color.red));
-                            player_input.requestFocus();
-                            showSoftKeybaord(game.this);
+                            hint.setText(getString(R.string.game_hint_higher,playerInput_string));
                         } else {
-                        hint.setText("Try a Number Lower than " + playerInput_string);
-//                            hintType(playerInput,randomNumberGenerated);
-                            tries.setText("Number of Tries: " + numberOfTries);
-                            player_input.setBackgroundColor(getColor(R.color.red));
-                            player_input.requestFocus();
-                            showSoftKeybaord(game.this);
+                            hint.setText(getString(R.string.game_hint_lower,playerInput_string));
 
                         }
+                        setHint(playerInput);
+                        tries.setText(getString(R.string.game_number_of_tries,numberOfTries));
+                        player_input.setBackgroundColor(getColor(R.color.red));
+                        player_input.requestFocus();
+                        showSoftKeybaord(game.this);
                     }
 
                 }
@@ -482,14 +599,20 @@ public class game extends AppCompatActivity {
                 previousPlayerInput = " ";
             }
         } else {
-            hint.setText("You Just Guessed That!, Try another Number");
+            hint.setText(getString(R.string.hint_warning));
             numberOfTries = numberOfTries - 1;
-            tries.setText("Number of Tries: " + numberOfTries);
+            tries.setText(getString(R.string.game_number_of_tries,numberOfTries));
         }
-
-        if (numberOfTries == 5) {
+        if (level <= 50) {
+            limit = 5;
+        } else if ((level >= 51) && (level <= 60)) {
+            limit = 6;
+        } else if ((level >= 61) && (level <= 100)) {
+            limit = 7;
+        }
+        if (numberOfTries == limit) {
             System.out.println("GAME OVER!, Correct Number was " + randomNumberGenerated);
-            createCustomDialog("custom_loss"); //Create a Dialog for loosing Game
+            createCustomDialog("loss"); //Create a Dialog for loosing Game
         }
 
     }
