@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +15,7 @@
         android:fontFamily="@font/consola"
         android:textColor="@color/text_color"
         android:textSize="32sp"
-        android:text="SCORES" />
+        android:text="@string/scores_header" />
 
     <TextView
         android:id="@+id/current_total_points_view"
@@ -28,7 +27,7 @@
         android:fontFamily="@font/consola"
         android:textColor="@color/text_color"
         android:textSize="18sp"
-        android:text="Total Score: 1000" />
+        android:text="@string/player_total_score_txt" />
 
 
     <TextView
@@ -41,7 +40,7 @@
         android:fontFamily="@font/consola"
         android:textColor="@color/text_color"
         android:textSize="18sp"
-        android:text="|1|   1000|" />
+        android:text="@string/score_rank_1_txt" />
 
     <TextView
         android:id="@+id/scores_rank_2_view"
@@ -53,7 +52,7 @@
         android:fontFamily="@font/consola"
         android:textColor="@color/text_color"
         android:textSize="18sp"
-        android:text="|2|   1000|" />
+        android:text="@string/score_rank_2_txt" />
 
     <TextView
         android:id="@+id/scores_rank_3_view"
@@ -65,7 +64,7 @@
         android:fontFamily="@font/consola"
         android:textColor="@color/text_color"
         android:textSize="18sp"
-        android:text="|3|   1000|" />
+        android:text="@string/score_rank_3_txt" />
 
     <TextView
         android:id="@+id/scores_rank_4_view"
@@ -77,7 +76,7 @@
         android:fontFamily="@font/consola"
         android:textColor="@color/text_color"
         android:textSize="18sp"
-        android:text="|4|   1000|" />
+        android:text="@string/score_rank_4_txt" />
 
     <TextView
         android:id="@+id/scores_rank_5_view"
@@ -89,5 +88,5 @@
         android:fontFamily="@font/consola"
         android:textColor="@color/text_color"
         android:textSize="18sp"
-        android:text="|5|   1000|" />
+        android:text="@string/score_rank_5_txt" />
 </RelativeLayout>

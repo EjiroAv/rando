@@ -62,6 +62,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="35dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:gravity="center">
 
         <TextView
@@ -71,8 +73,8 @@
             android:background="@drawable/ic_custom_button_background"
             android:fontFamily="@font/consola"
             android:gravity="center"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:text="@string/view_level"
             android:textColor="@color/text_color"
             android:textSize="12sp" />
@@ -84,8 +86,8 @@
             android:background="@drawable/ic_custom_button_background"
             android:fontFamily="@font/consola"
             android:gravity="center"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:text="@string/view_number_of_tries"
             android:textColor="@color/text_color"
             android:textSize="12sp" />
@@ -97,8 +99,8 @@
             android:background="@drawable/ic_custom_button_background"
             android:fontFamily="@font/consola"
             android:gravity="center"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:text="@string/view_total_points"
             android:textColor="@color/text_color"
             android:textSize="12sp" />

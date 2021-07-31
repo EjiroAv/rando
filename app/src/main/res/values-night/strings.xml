@@ -18,7 +18,7 @@
     <string name="total_points">Total Points: %1$d</string>
     <string name="level">Level: %1$d</string>
     <string name="game_main_text">Guess the Number</string>
-    <string name="game_hint_number_between">Hint: Number is between 0 and </string>
+    <string name="game_hint_number_between">Hint: Number is between 0 and %1$d</string>
     <string name="game_number_of_tries">Number Of Tries: %1$d</string>
     <string name="game_button_text">S U B M I T</string>
     <string name="game_editTextView_hint">Input answer</string>
@@ -60,6 +60,16 @@
     <string name="generating_number_str" tools:ignore="TypographyEllipsis">Generating Number ...</string>
     <string name="generating_number_int_view">0</string>
     <string name="switch_text">Light/Dark Mode</string>
+
+    <string name="scores_header">SCORES</string>
+    <string name="player_total_score_txt">Total Score: 1000</string>
+    <string name="score_rank_1_txt">1. 1430</string>
+    <string name="score_rank_2_txt">2. 432</string>
+    <string name="score_rank_3_txt">3. 321</string>
+    <string name="score_rank_4_txt">4. 215</string>
+    <string name="score_rank_5_txt">5. 154</string>
+
+    <!--    Certain String Resources are use Strictly to preview the design -->
 
 
 </resources>

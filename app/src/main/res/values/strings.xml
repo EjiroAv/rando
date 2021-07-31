@@ -9,10 +9,10 @@
     <!--    Score Strings-->
     <string name="no_score_found">"No points on Record, Play Game to get Points"</string>
     <string name="score_rank_1_string">1. %1$d</string>
-    <string name="score_rank_2_string">1. %1$d</string>
-    <string name="score_rank_3_string">1. %1$d</string>
-    <string name="score_rank_4_string">1. %1$d</string>
-    <string name="score_rank_5_string">1. %1$d</string>
+    <string name="score_rank_2_string">2. %1$d</string>
+    <string name="score_rank_3_string">3. %1$d</string>
+    <string name="score_rank_4_string">4. %1$d</string>
+    <string name="score_rank_5_string">5. %1$d</string>
 
     <!-- Game Strings -->
     <string name="total_points">Total Points: %1$d</string>
@@ -24,7 +24,7 @@
     <string name="game_editTextView_hint">Input answer</string>
 
     <string name="view_total_points">Total Points: 20</string>
-    <string name="view_level">Level: 1</string>
+    <string name="view_level">Level: 100</string>
     <string name="view_hint_number_between">Hint: Number is between 0 and 20</string>
     <string name="view_number_of_tries">Number Of Tries: 0</string>
 
@@ -60,6 +60,17 @@
     <string name="generating_number_str" tools:ignore="TypographyEllipsis">Generating Number ...</string>
     <string name="generating_number_int_view">0</string>
     <string name="switch_text">Light/Dark Mode</string>
+
+
+    <string name="scores_header">SCORES</string>
+    <string name="player_total_score_txt">Total Score: 1000</string>
+    <string name="score_rank_1_txt">1. 1430</string>
+    <string name="score_rank_2_txt">2. 432</string>
+    <string name="score_rank_3_txt">3. 321</string>
+    <string name="score_rank_4_txt">4. 215</string>
+    <string name="score_rank_5_txt">5. 154</string>
+
+<!--    Certain String Resources are use Strictly to preview the design -->
 
 
 </resources>

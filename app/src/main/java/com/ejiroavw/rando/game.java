@@ -23,13 +23,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class game extends AppCompatActivity {
     Handler handler;
-
-    // Number of Tries
-    public static int numberOfTries = 0;
 
     private EditText player_input;
     private TextView hint, tries, totalPoints, game_level, main_text, generating_number_animation_view;
@@ -38,20 +36,15 @@ public class game extends AppCompatActivity {
     private com.daimajia.numberprogressbar.NumberProgressBar progressBar;
     private RelativeLayout layout;
 
-    public static int level = 1;
-    public static int limit = 0;
 
-    //Generate Random Number
     Random rn = new Random();
     int randomNumberGenerated = rn.nextInt(setDifficulty(level)) + 1;
 
-
-    //Total Points
+    public static int numberOfTries = 0;
+    public static int level = 1;
+    public static int limit = 0;
     public static int totalPoints_accumulated = 0;
-
-    //Previous Player Input
     public static String previousPlayerInput;
-
     public static String msg;
 
 
@@ -60,7 +53,7 @@ public class game extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         initview();
         setViewsInvisible();
         layout.setVisibility(View.VISIBLE);
@@ -81,12 +74,9 @@ public class game extends AppCompatActivity {
             }, 1000);
         }
 
-        game_level.setText(getString(R.string.level,level));
-        totalPoints.setText(getString(R.string.total_points,totalPoints_accumulated));
+        game_level.setText(getString(R.string.level, level));
+        totalPoints.setText(getString(R.string.total_points, totalPoints_accumulated));
         System.out.println(randomNumberGenerated);
-
-
-
 
 
         submit.setOnClickListener(view -> {
@@ -149,15 +139,15 @@ public class game extends AppCompatActivity {
         int options = 0;
         if (level <= 10) {
             options = shr.nextInt(1);
-        } else if ((level >= 11) && (level <= 30)) {
+        } else if (level <= 30) {
             options = shr.nextInt(2);
-        } else if ((level >= 31) && (level <= 40)) {
+        } else if (level <= 40) {
             options = shr.nextInt(3);
-        } else if ((level >= 41) && (level <= 50)) {
+        } else if (level <= 50) {
             options = shr.nextInt(4);
-        } else if ((level >= 51) && (level <= 60)) {
+        } else if (level <= 60) {
             options = shr.nextInt(5);
-        } else if ((level >= 61) && (level <= 100)) {
+        } else if (level <= 100) {
             options = shr.nextInt(6);
         }
         if (options == 0) {
@@ -187,7 +177,7 @@ public class game extends AppCompatActivity {
             if (randomNumberGenerated % 2 == 0) {
                 msg = ("Number is Even");
             } else {
-                 msg = ("Number is Odd");
+                msg = ("Number is Odd");
             }
         } else if (options == 2) {
             if (randomNumberGenerated > 10) {
@@ -218,7 +208,7 @@ public class game extends AppCompatActivity {
             } else {
                 int UpperBound = randomNumberGenerated + 10;
                 int LowerBound = randomNumberGenerated - 10;
-                 msg = ("Number is between " + LowerBound + " and " + UpperBound);
+                msg = ("Number is between " + LowerBound + " and " + UpperBound);
             }
         } else if (options == 4) {
             if ((randomNumberGenerated < (game_playerInput - 5)) && (randomNumberGenerated > (game_playerInput + 5))) {
@@ -243,7 +233,7 @@ public class game extends AppCompatActivity {
                 } else {
                     msg = ("Number is Odd");
                 }
-            } else if (randomNumberGenerated >= 11) {
+            } else {
                 int option = srn.nextInt(1);
                 if (option == 1) {
                     if (firstDigitInt == 0) {
@@ -282,13 +272,14 @@ public class game extends AppCompatActivity {
     }
 
 
-    private void setHintVisible(){
+    private void setHintVisible() {
         if (numberOfTries >= 3) {
             hint_button.setVisibility(View.VISIBLE);
-        } else if (numberOfTries < 3) {
+        } else {
             hint_button.setVisibility(View.INVISIBLE);
         }
     }
+
     private void setViewsInvisible() {
         main_text.setVisibility(View.INVISIBLE);
         player_input.setVisibility(View.INVISIBLE);
@@ -320,7 +311,7 @@ public class game extends AppCompatActivity {
         game.this.runOnUiThread(() -> {
             Random gna = new Random();
             int randomNumberForAnimation = gna.nextInt(100) + 1;
-            generating_number_animation_view.setText(getString(R.string.random_number_for_animation,randomNumberForAnimation));
+            generating_number_animation_view.setText(getString(R.string.random_number_for_animation, randomNumberForAnimation));
         });
 
     }
@@ -337,7 +328,7 @@ public class game extends AppCompatActivity {
             {
                 handler.postDelayed(() -> {
                     setViewsVisible();
-                    hint.setText(getString(R.string.hint_after_load,setDifficulty(level)));
+                    hint.setText(getString(R.string.hint_after_load, setDifficulty(level)));
                 }, 1000);
             }
 
@@ -360,23 +351,19 @@ public class game extends AppCompatActivity {
     public void setupUI(View view) {
         if (!(view instanceof EditText)) {
             view.setOnTouchListener((v, event) -> {
-                switch (event.getAction()){
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         hideSoftKeyboard(game.this);
-                    break;
+                        break;
                     case MotionEvent.ACTION_UP:
                         v.performClick();
-                    break;
+                        break;
                 }
                 return false;
             });
         }
 
     }
-
-
-    //Initialise all the views and Objects From the ACTIVITY
-
 
     private void initview() {
         hint = findViewById(R.id.game_hint_view);
@@ -393,7 +380,6 @@ public class game extends AppCompatActivity {
         hint_button = findViewById(R.id.hint_button_view);
     }
 
-    // Create Dialog for Different Case Scenarios
 
     public void createCustomDialog(String type) {
         switch (type) {
@@ -403,10 +389,10 @@ public class game extends AppCompatActivity {
                 dialog.setCancelable(false);
                 dialog.setContentView(R.layout.activity_custom_dialog);
 
-                TextView titleTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_title);
-                TextView messageTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_message);
-                Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
-                Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
+                TextView titleTextView = dialog.findViewById(R.id.custom_dialog_loss_title);
+                TextView messageTextView = dialog.findViewById(R.id.custom_dialog_loss_message);
+                Button positiveButton = dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
+                Button negativeButton = dialog.findViewById(R.id.custom_dialog_loss_button_exit);
 
                 titleTextView.setText(getString(R.string.loss_dialog_title));
                 messageTextView.setText(getString(R.string.loss_dialog_message, randomNumberGenerated));
@@ -440,10 +426,10 @@ public class game extends AppCompatActivity {
                 dialog.setCancelable(false);
                 dialog.setContentView(R.layout.activity_custom_dialog);
 
-                TextView titleTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_title);
-                TextView messageTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_message);
-                Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
-                Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
+                TextView titleTextView = dialog.findViewById(R.id.custom_dialog_loss_title);
+                TextView messageTextView = dialog.findViewById(R.id.custom_dialog_loss_message);
+                Button positiveButton = dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
+                Button negativeButton = dialog.findViewById(R.id.custom_dialog_loss_button_exit);
 
                 titleTextView.setText(getString(R.string.win_dialog_title));
                 messageTextView.setText(getString(R.string.win_dialog_message, totalPoints_accumulated));
@@ -477,10 +463,10 @@ public class game extends AppCompatActivity {
                 dialog.setCancelable(false);
                 dialog.setContentView(R.layout.activity_custom_dialog);
 
-                TextView titleTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_title);
-                TextView messageTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_message);
-                Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
-                Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
+                TextView titleTextView = dialog.findViewById(R.id.custom_dialog_loss_title);
+                TextView messageTextView = dialog.findViewById(R.id.custom_dialog_loss_message);
+                Button positiveButton = dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
+                Button negativeButton = dialog.findViewById(R.id.custom_dialog_loss_button_exit);
 
                 titleTextView.setText(getString(R.string.exit_dialog_title));
                 messageTextView.setText(getString(R.string.exit_dialog_message));
@@ -519,10 +505,10 @@ public class game extends AppCompatActivity {
                 dialog.setCancelable(false);
                 dialog.setContentView(R.layout.activity_custom_dialog);
 
-                TextView titleTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_title);
-                TextView messageTextView = (TextView) dialog.findViewById(R.id.custom_dialog_loss_message);
-                Button positiveButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
-                Button negativeButton = (Button) dialog.findViewById(R.id.custom_dialog_loss_button_exit);
+                TextView titleTextView = dialog.findViewById(R.id.custom_dialog_loss_title);
+                TextView messageTextView = dialog.findViewById(R.id.custom_dialog_loss_message);
+                Button positiveButton = dialog.findViewById(R.id.custom_dialog_loss_button_tryAgain);
+                Button negativeButton = dialog.findViewById(R.id.custom_dialog_loss_button_exit);
 
                 titleTextView.setText(getString(R.string.hint_dialog_title));
                 messageTextView.setText(msg);
@@ -538,19 +524,15 @@ public class game extends AppCompatActivity {
     }
 
 
-
-
-    //Check If user Input(or User Guess) is the same as random Number Generated
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void mainAlgorithm() {
-        numberOfTries++; //Track Number of Tries of User
+        numberOfTries++;
 
         System.out.println("Correct Answer : " + randomNumberGenerated);
-        String playerInput_string = player_input.getText().toString(); //Collect User Input
-        player_input.setText(""); //Clear text in EditView so USER can easily input their next Guess
+        String playerInput_string = player_input.getText().toString();
+        player_input.setText("");
 
 
-        //Check if the UserInput is the same as the number they have recently used: To prevent unnecessary Repetitiveness
         if ((previousPlayerInput == null) || (!previousPlayerInput.equals(playerInput_string))) {
             try {
                 previousPlayerInput = playerInput_string;
@@ -568,13 +550,13 @@ public class game extends AppCompatActivity {
                         createCustomDialog("win"); //Create a Dialog for Winning Game
                     } else {
                         if (playerInput < randomNumberGenerated) {
-                            hint.setText(getString(R.string.game_hint_higher,playerInput_string));
+                            hint.setText(getString(R.string.game_hint_higher, playerInput_string));
                         } else {
-                            hint.setText(getString(R.string.game_hint_lower,playerInput_string));
+                            hint.setText(getString(R.string.game_hint_lower, playerInput_string));
 
                         }
                         setHint(playerInput);
-                        tries.setText(getString(R.string.game_number_of_tries,numberOfTries));
+                        tries.setText(getString(R.string.game_number_of_tries, numberOfTries));
                         player_input.setBackgroundColor(getColor(R.color.red));
                         player_input.requestFocus();
                         showSoftKeybaord(game.this);
@@ -586,24 +568,24 @@ public class game extends AppCompatActivity {
                 player_input.setError("Input a Number between 0 - 9");
                 player_input.requestFocus();
                 showSoftKeybaord(game.this);
-                numberOfTries = numberOfTries - 1;// To Prevent numberOfTries from counting
+                numberOfTries = numberOfTries - 1;
                 previousPlayerInput = " ";
             }
         } else {
             hint.setText(getString(R.string.hint_warning));
             numberOfTries = numberOfTries - 1;
-            tries.setText(getString(R.string.game_number_of_tries,numberOfTries));
+            tries.setText(getString(R.string.game_number_of_tries, numberOfTries));
         }
         if (level <= 50) {
             limit = 5;
-        } else if ((level >= 51) && (level <= 60)) {
+        } else if (level <= 60) {
             limit = 6;
-        } else if ((level >= 61) && (level <= 100)) {
+        } else if (level <= 100) {
             limit = 7;
         }
         if (numberOfTries == limit) {
             System.out.println("GAME OVER!, Correct Number was " + randomNumberGenerated);
-            createCustomDialog("loss"); //Create a Dialog for loosing Game
+            createCustomDialog("loss");
         }
 
     }

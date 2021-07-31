@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 public class scores extends AppCompatActivity {
     private TextView total_points_view, scoreRank_1_init,scoreRank_2_init,scoreRank_3_init,scoreRank_4_init,scoreRank_5_init;
     int totalPoints_int,score_rank_1, score_rank_2, score_rank_3,score_rank_4,score_rank_5;
@@ -16,11 +18,12 @@ public class scores extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scores);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         initialiseViews();
 
         Intent intent = getIntent();
         String activity = intent.getStringExtra("activity");
+        assert activity != null;
         if(activity.equals("main_menu")){
             total_points_view.setVisibility(View.INVISIBLE);
         }else{
